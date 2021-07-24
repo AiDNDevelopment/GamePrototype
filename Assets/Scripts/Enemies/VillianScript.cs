@@ -22,6 +22,8 @@ public class VillianScript : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
+    public GameObject Enemey;
+    public int damage;
 
     //States
     public float sightRange, attackRange;
@@ -73,7 +75,7 @@ public class VillianScript : MonoBehaviour
             walkPointSet = true;
     }
 
-    private void ChasePlayer()//This is broken cus i dno how to set it to equally chase both so atm it sorta does both if the player is close enough.
+    private void ChasePlayer()//This is broken cus i dno how to set it to equally chase both so atm it sorta does both if the player is close enough but it prios the defense point.
     {
         agent.SetDestination(player.position);
         agent.SetDestination(defense.position);
@@ -85,12 +87,14 @@ public class VillianScript : MonoBehaviour
         //Make sure enemy doesn't move
         agent.SetDestination(transform.position);
 
-        transform.LookAt(player);
+        transform.LookAt(defense);
 
         if (!alreadyAttacked)
         {
             ///Attack code here
-            
+            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
+            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
             ///End of attack code
 
             alreadyAttacked = true;
@@ -101,4 +105,19 @@ public class VillianScript : MonoBehaviour
     {
         alreadyAttacked = false;
     }
+
+    void OnCollisionEnter(Collision collision){ // should handle the defense point health and the image thing
+        if(collision.gameObject.tag=="Enemy" || collision.gameObject.tag=="Bullet")
+        {
+            health = health - damage;
+            return;
+        }
+
+        if (health == 0){
+            Destroy(Enemey);
+        }
+    } 
+
+    
+    
 }

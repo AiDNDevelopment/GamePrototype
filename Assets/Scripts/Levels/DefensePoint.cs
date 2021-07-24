@@ -6,8 +6,9 @@ public class DefensePoint : MonoBehaviour
 {
 
     public HealthBarController healthBar;
-    void Start(){
 
+    void Start(){
+       
     }
 
     void Update(){
@@ -15,12 +16,12 @@ public class DefensePoint : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision){ // should handle the defense point health and the image thing
-        if(collision.gameObject.tag=="Enemy")
+        if(collision.gameObject.tag=="Enemy" || collision.gameObject.tag=="Bullet")
         {
             if (healthBar)
             {
                 healthBar.onTakeDamage(10);
             }
         }
-    }
+    }    
 }
