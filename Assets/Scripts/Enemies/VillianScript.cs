@@ -4,7 +4,9 @@ using UnityEngine;
 using UnityEngine.AI;
 
 public class VillianScript : MonoBehaviour
+
 {public NavMeshAgent agent;
+    
 
     public Transform player;
     public Transform defense;
@@ -22,7 +24,6 @@ public class VillianScript : MonoBehaviour
     public float timeBetweenAttacks;
     bool alreadyAttacked;
     public GameObject projectile;
-    public GameObject Enemey;
     public int damage;
 
     //States
@@ -34,6 +35,7 @@ public class VillianScript : MonoBehaviour
         player = GameObject.Find("Player").transform;
         defense = GameObject.Find("Defense_Point").transform;       
         agent = GetComponent<NavMeshAgent>();
+        
     }
 
     private void Update()
@@ -48,6 +50,11 @@ public class VillianScript : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange || !defenseInSightRange && !defesneInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange || defenseInSightRange && !defesneInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange || defesneInAttackRange && defenseInSightRange) AttackPlayer();
+
+        if(health <= 0){
+                Debug.Log("Dead Enemy"); // this should work but like projectiles im not sure how to delete just the clones
+                Destroy(gameObject); //this turns the enemies into suicide bombers for some reason
+            }
     }
 
     private void Patroling()
@@ -94,7 +101,9 @@ public class VillianScript : MonoBehaviour
             ///Attack code here
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 0.5f, ForceMode.Impulse);
+            Destroy(rb, 1f); // doesnt quite work yet, freezes them in place but doesnt delete them :/ setting this to projectile deletes the object thats being cloned.
+            
             ///End of attack code
 
             alreadyAttacked = true;
@@ -107,14 +116,15 @@ public class VillianScript : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision){ // should handle the defense point health and the image thing
-        if(collision.gameObject.tag=="Enemy" || collision.gameObject.tag=="Bullet")
+        if(collision.gameObject.tag=="Bullet")
         {
             health = health - damage;
-            return;
-        }
-
-        if (health == 0){
-            Destroy(Enemey);
+            return;    
+            /* This block is the key to getting enemies to suicide bomb themselves when placed here.
+            if(health <= 0){
+                Debug.Log("Dead Enemy"); 
+                gameObject.SetActive(false); 
+            }*/       
         }
     } 
 

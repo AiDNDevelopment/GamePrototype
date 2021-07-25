@@ -30,7 +30,7 @@ public class ThirdPersonCharacterController : MonoBehaviour
                       
             Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
             rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
+            rb.AddForce(transform.up * 0.5f, ForceMode.Impulse);
 
             hasAttacked = true;
             Debug.Log("You shot");

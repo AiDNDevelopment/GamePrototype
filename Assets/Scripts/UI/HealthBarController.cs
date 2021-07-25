@@ -20,14 +20,14 @@ public class HealthBarController : MonoBehaviour
        if(healthBar.fillAmount == 0){
            DestroyDefense();
            Debug.Log("Defense Destroyed");
-           return;
        }
    }
 
    private void DestroyDefense()
     {
         defPoint = GameObject.FindGameObjectWithTag("Defense");
-        Destroy(defPoint);
+        defPoint.SetActive(false);
+        Debug.Log("Game over");
     }
 
 }

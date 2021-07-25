@@ -98,7 +98,7 @@ public class WaveSpawner : MonoBehaviour {
         yield break; //for some reason we HAVE to end this with this otherwise things get very very angry with me
     } 
 
-    void SpawnEnemy(Transform _enemy){ //instantiates an enemy to be spawned
+    public void SpawnEnemy(Transform _enemy){ //instantiates an enemy to be spawned
         Debug.Log("Spawning Enemy: " + _enemy.name);
         
         Transform _sp = spawnPoints[Random.Range(0, spawnPoints.Length)];
