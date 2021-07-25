@@ -9,6 +9,7 @@ public class HealthBarController : MonoBehaviour
     public Image healthBar;
     public float health;
     public float startHealth;
+     public GameOverScript launchGameover;
 
     public GameObject defPoint;
     // Start is called before the first frame update
@@ -28,6 +29,11 @@ public class HealthBarController : MonoBehaviour
         defPoint = GameObject.FindGameObjectWithTag("Defense");
         defPoint.SetActive(false);
         Debug.Log("Game over");
+        GameOver();
+    }
+
+     public void GameOver(){
+        launchGameover.Setup();
     }
 
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 public class DefensePoint : MonoBehaviour
 {
 
+    public GameOverScript launchGameover;
+    
+
     public HealthBarController healthBar;
 
     void Start(){

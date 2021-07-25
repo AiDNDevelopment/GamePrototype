@@ -12,8 +12,8 @@ public class ThirdPersonCameraController : MonoBehaviour
     float zoomSpeed = 2f;
     void Start(){
         Obstruction = Target;
-        Cursor.visible = false; // Hides the cursor when game starts
-        Cursor.lockState = CursorLockMode.Locked; // locks the cursor in place so that when you move it doesnt move outside the window
+        //Cursor.visible = false; // Hides the cursor when game starts
+        //Cursor.lockState = CursorLockMode.Locked; // locks the cursor in place so that when you move it doesnt move outside the window
     }
 
     void LateUpdate(){ // Late update on camera control, this is different to the once a frame one ... i think
@@ -25,7 +25,7 @@ public class ThirdPersonCameraController : MonoBehaviour
     void CamControl(){ // Camera is based on the mouse with the player locked in the central view.
         mouseX += Input.GetAxis("Mouse X") * rotationSpeed;
         mouseY -= Input.GetAxis("Mouse Y") * rotationSpeed;
-        mouseY = Mathf.Clamp(mouseY, -35, 60);
+        //mouseY = Mathf.Clamp(mouseY, -35, 60);
 
         transform.LookAt(Target);
 
